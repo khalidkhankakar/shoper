@@ -21,6 +21,7 @@ export default async function Layout({
       },
     },
     collection: 'categories',
+    sort: 'name',
   })
 
   return (

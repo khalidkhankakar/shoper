@@ -1,16 +1,20 @@
 import React from 'react'
 import { SearchInput } from './search-input'
 import { Categories } from './categories'
+import { CustomCategory } from '../../types'
+import { Category } from '@/payload-types'
 
 interface Props {
-  data: any
+  data: {
+    docs: CustomCategory[]
+  }
 }
 
 export const SearchFilter = ({ data }: Props) => {
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomCategory[] = data.docs.map((doc) => ({
     ...doc,
-    subcategories: (doc.subcategories?.docs ?? []).map((subcat: any) => ({
-      ...subcat,
+    subcategories: (doc.subcategories?.docs ?? []).map((subcat) => ({
+      ...(subcat as Category),
       subcategories: undefined,
     })),
   }))
