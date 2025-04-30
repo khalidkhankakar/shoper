@@ -1,28 +1,15 @@
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
-import { Progress } from '@/components/ui/progress'
-import { Textarea } from '@/components/ui/textarea'
-
-
-import React from 'react'
+import { getQueryClient, trpc } from '@/trpc/server'
 
 const HomePage = async () => {
-
+  const queryClient = getQueryClient()
+  const categories = await queryClient.fetchQuery(trpc.categories.getMany.queryOptions())
 
   return (
-    <div className='p-4'>
-      <div className='flex flex-col gap-2'>
-      <Button variant={'evaluated'}>Button</Button>
-      <Input placeholder='I am input' />
-      <Textarea placeholder='I am textarea' />
-      <Progress value={50} />
-      <Checkbox checked />
-      </div>
-
+    <div className="p-4">
+      <p>Home page</p>
+      {JSON.stringify(categories, null, 2)}
     </div>
   )
 }
 
 export default HomePage
- 
