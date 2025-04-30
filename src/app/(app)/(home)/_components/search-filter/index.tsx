@@ -1,28 +1,19 @@
+'use client'
 import React from 'react'
 import { SearchInput } from './search-input'
 import { Categories } from './categories'
-import { CustomCategory } from '../../types'
-import { Category } from '@/payload-types'
+import { useTRPC } from '@/trpc/client'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-interface Props {
-  data: {
-    docs: CustomCategory[]
-  }
-}
-
-export const SearchFilter = ({ data }: Props) => {
-  const formattedData: CustomCategory[] = data.docs.map((doc) => ({
-    ...doc,
-    subcategories: (doc.subcategories?.docs ?? []).map((subcat) => ({
-      ...(subcat as Category),
-      subcategories: undefined,
-    })),
-  }))
+export const SearchFilter = () => {
+  const trpc = useTRPC()
+  // destructure the query options from the trpc instance
+  const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions())
 
   return (
     <div className="bg-slate-100 p-4">
       <SearchInput />
-      <Categories data={formattedData} />
+      <Categories data={data} />
     </div>
   )
 }

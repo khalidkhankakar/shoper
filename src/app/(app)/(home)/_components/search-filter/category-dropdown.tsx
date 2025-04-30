@@ -7,10 +7,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
-import { CustomCategory } from '../../types'
+import { CategoriesGetManyOutput } from '@/modules/categories/types'
 
 interface Props {
-  category: CustomCategory[]
+  category: CategoriesGetManyOutput
   isActive?: boolean
   isNavigationHover?: boolean
 }
